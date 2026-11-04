@@ -48,5 +48,13 @@ public class AppStore {
         }
         return 0;
     }
+    public String sacarJuegos(){
+        String juegoS = "";
+        for(int i = 0; i < indice; i++){
+            juegoS += juegos[i];
+            juegoS += "\n";
+        }
+        return !juegoS.trim().isBlank()?juegoS:"No hay juegos a mostrar";
+    }
 
 }
