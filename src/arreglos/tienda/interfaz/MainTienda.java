@@ -1,8 +1,9 @@
 package arreglos.tienda.interfaz;
 
-import arreglos.tienda.modelo.AppStore;
-import arreglos.tienda.modelo.Juego;
+import arreglos.tienda.modelo.*;
+import arreglos.tienda.utilitario.Validacion;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class MainTienda {
@@ -11,15 +12,16 @@ public class MainTienda {
 
     static void main() {
         int opc;
+        tienda.cargarDatos();
         do{
             menu();
             opc = Integer.parseInt(sc.nextLine());
             switch (opc){
                 case 1:{
-
+                    ingresarJuegos();
                 }break;
                 case 2:{
-
+                    System.out.println(tienda.sacarJuegos());
                 }break;
                 case 3:{
 
@@ -28,7 +30,7 @@ public class MainTienda {
 
                 }break;
                 case 5:{
-
+                    vender();
                 }break;
                 case 6:{
 
@@ -51,6 +53,50 @@ public class MainTienda {
         System.out.println("6. Juego más vendido");
         System.out.println("7. Salir");
         System.out.print("Ingrese una opcion: ");
+    }
+
+    public static void ingresarJuegos(){
+        System.out.println("*******Ingreso de datos********");
+        String nombre = Validacion.leerString("Ingrese el nombre");
+        String categoria = Validacion.leerString("Ingrese la categoria");
+        System.out.print("Ingrese el tamanio: ");
+        int tamanio = Integer.parseInt(sc.nextLine());
+        System.out.print("Ingrese el precio: ");
+        double precio = Double.parseDouble(sc.nextLine());
+        System.out.print("Ingrese el stock inicial: ");
+        int licenciasDisponibles = Integer.parseInt(sc.nextLine());
+        if(tienda.agregarJuego(new Juego(nombre,categoria,tamanio,precio,licenciasDisponibles))){
+            JOptionPane.showMessageDialog(null,"El juego se ha agregado correctamente");
+        }else{
+            JOptionPane.showMessageDialog(null,"El juego no pudo ser agregado");
+        }
+    }
+/*codigo si mi clase AppStore no tiene el metodo para mostrar todos los juegos
+    public static void mostrarJuegos(){
+
+        Juego juegos[] = tienda.getJuegos();
+        if (tienda.getIndice() != -1) {
+            for(int i = 0; i <= tienda.getIndice(); i++){
+                System.out.println(juegos[i]);
+            }
+        }else{
+            System.out.println("No hay Juegos para mostrar");
+        }
+     }
+ */
+    public static void vender(){
+        String nombre = Validacion.leerString("Ingrese el nombre del juego");
+        System.out.print("Ingrese la cantidad: ");
+        int cantidad = Integer.parseInt(sc.nextLine());
+
+        double pago = tienda.vender(nombre,cantidad);
+
+        if(pago > 0){
+            JOptionPane.showMessageDialog(null,"Juego: "+nombre+"\nCantidad: "+cantidad+
+                    "\nValor a cancelar: "+pago);
+        }else{
+            JOptionPane.showMessageDialog(null,"No ha sido posible vender el juego "+nombre);
+        }
     }
 
 }

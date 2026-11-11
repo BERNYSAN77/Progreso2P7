@@ -1,11 +1,11 @@
-package arreglos.tienda.interfaz;
+package arreglos.tienda.utilitario;
 
 import java.util.Scanner;
 
 public class Validacion {
     private static Scanner sc = new Scanner(System.in);
 
-    public String leerString(String mensaje){
+    public static String leerString(String mensaje){
         String nombre;
         do {
             System.out.print(mensaje + " : ");
@@ -13,5 +13,5 @@ public class Validacion {
         }while(nombre==null || nombre.trim().isEmpty());
         return nombre;
     }
-    }
 }
+

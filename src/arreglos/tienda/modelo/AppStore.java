@@ -1,5 +1,7 @@
 package arreglos.tienda.modelo;
 
+import java.util.Arrays;
+
 public class AppStore {
     private static final int MAX = 4;
     private Juego juegos[];
@@ -8,9 +10,9 @@ public class AppStore {
     public AppStore(){
         juegos = new Juego[MAX];
         indice = -1;
-        cargarDatos();
+       // cargarDatos();
     }
-    private void cargarDatos(){
+    public void cargarDatos(){
         agregarJuego(new Juego("Fifa2026","Deportes",15,45,50));
         agregarJuego(new Juego("Roblox","Acción",23,59,80));
     }
@@ -19,19 +21,24 @@ public class AppStore {
         return juegos;
     }
 
-    public void agregarJuego(Juego j){ //en vez del set()
+    public int getIndice() {
+        return indice;
+    }
+
+    public boolean agregarJuego(Juego j){ //en vez del set()
         if(j != null && indice < MAX -1){
             juegos[++indice] = j;
+            return true;
         }
+        return false;
     }
     public Juego buscarJuego(String nombre){
         if(nombre != null && !nombre.trim().isEmpty()){
-            for(int i = 0; i < indice; i++){
+            for(int i = 0; i <= indice; i++){
                 if(juegos[i].getNombre().equalsIgnoreCase(nombre)){
                     return juegos[i];
                 }
             }
-            return null;
         }
         return null;
     }
@@ -50,7 +57,7 @@ public class AppStore {
         //no valido pq el buscar ya valida el nombre y el vender de juego la cantidad
         Juego j1 = buscarJuego(nombre);
         if(j1 != null){
-            if(j1.vender(cantidad)){
+             if(j1.vender(cantidad)){
                 return cantidad * j1.getPrecio();
             }
         }
@@ -58,7 +65,7 @@ public class AppStore {
     }
     public String sacarJuegos(){
         String juegoS = "";
-        for(int i = 0; i < indice; i++){
+        for(int i = 0; i <= indice; i++){
             juegoS += juegos[i];
             juegoS += "\n";
         }
@@ -83,5 +90,6 @@ public class AppStore {
         }
         return nombre;
     }
+
 
 }
